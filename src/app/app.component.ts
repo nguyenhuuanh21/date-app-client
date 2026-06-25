@@ -1,23 +1,19 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { NavComponent } from './layout/nav/nav.component';
-import { AccountService } from './core/services/account.service';
 import { HomeComponent } from './features/home/home.component';
 import { User } from './types/user';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,NavComponent,HomeComponent],
+  imports: [RouterOutlet,NavComponent,HomeComponent,NgClass],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
-  protected account=inject(AccountService);
+export class AppComponent {
   title = 'client';
-  private http=inject(HttpClient);
-  protected members=signal<any>([]);
+  protected router=inject(Router)
   protected memberTest:Array<User>=[
     {
       id:'1',
@@ -38,29 +34,9 @@ export class AppComponent implements OnInit {
       email:'test3@example.com'
     }
   ]
-  async ngOnInit() {
-    // this.http.get('https://localhost:7293/api/Members').subscribe({
-    //   next:(res)=>this.members.set(res),
-    //   error:(err)=>console.log(err),
-    //   complete:()=>console.log('completed')
-    // })
-    this.setCurrentUser()
-    this.members.set(await this.getMembers());
-  }
-  setCurrentUser(){
-    const user=localStorage.getItem('user');
-    if(user){
-      this.account.currentUser.set(JSON.parse(user));
-    }
-  }
-  async getMembers(){
-    try{
-      return await lastValueFrom(this.http.get('https://localhost:7293/api/Members')) ;
-    }catch(err){
-      console.log(err);
-      throw err;
-    }
-  }
+
+
+
 }
 
 
