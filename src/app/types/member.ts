@@ -17,3 +17,9 @@ export interface Photo {
   memberId: string
 }
 
+export interface EditTableMember {
+  displayName: string
+  description?: string
+  city: any
+  country: string
+}

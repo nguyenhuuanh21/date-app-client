@@ -1,4 +1,4 @@
-@if(member();as member){
+@if(memberService.member();as member){
 <div class="flex flex-col gap-3">
     <div class="flex gap-3">
         <span class="font-semibold">
@@ -17,6 +17,29 @@
         </span>
     </div>
     <h3 class="text-lg font-semibold text-primary">About {{member.displayName}}</h3>
+    @if(memberService.editMode()){
+        <form #editForm="ngForm" (ngSubmit)="updateProfile()" class="flex flex-col w-full gap-5">
+            <label for="" class="floating-label">
+                <span>Display Name</span>
+                <input name="displayName" [(ngModel)]="editTableMember.displayName" placeholder="Display name" type="text" class="input w-full" required>
+            </label>
+              <label for="" class="floating-label">
+                <span>Description</span>
+                <textarea name="description" [(ngModel)]="editTableMember.description" placeholder="Description" type="text" class="input w-full" required></textarea>
+            </label>
+            <label for="" class="floating-label">
+                <span>City</span>
+                <input name="city" [(ngModel)]="editTableMember.city" placeholder="City" type="text" class="input w-full" required>
+            </label>
+            <label for="" class="floating-label">
+                <span>Country</span>
+                <input name="Country" [(ngModel)]="editTableMember.country" placeholder="Country" type="text" class="input w-full" required>
+            </label>
+            <div class="flex self-end ">
+                <button [disabled]="!editForm.dirty" type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </form>
+    }
     <div>{{member.description}}</div>
 </div>
 }
