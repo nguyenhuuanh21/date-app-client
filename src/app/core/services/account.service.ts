@@ -12,7 +12,7 @@ export class AccountService {
   currentUser=signal<User | null>(null);
   baseUrl=environment.baseUrl
   register(creds:RegisterCreds){
-    return this.http.post(this.baseUrl+'Account/register',creds);
+    return this.http.post(this.baseUrl+'Account/register',creds)
   }
   login(creds:LoginCreds){
     return this.http.post<User>(this.baseUrl+'Account/login',creds).pipe(
